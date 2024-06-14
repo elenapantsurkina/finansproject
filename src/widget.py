@@ -15,3 +15,16 @@ def mask_account_card(number_account_card: str) -> Any:
 
 
 print(mask_account_card("Maestro 1596837868705199"))
+
+
+
+
+from datetime import datetime
+
+def get_data(data: str) -> str:
+    """Функция преобразования даты """
+    d = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
+    return d.strftime("%d.%m.%Y")
+
+
+print(get_data("2018-07-11T02:26:18.671407"))
