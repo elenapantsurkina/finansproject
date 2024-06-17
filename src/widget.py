@@ -1,6 +1,8 @@
-from typing import Any
-
 import mask
+
+from datetime import datetime
+
+from typing import Any
 
 
 def mask_account_card(number_account_card: str) -> Any:
@@ -13,16 +15,11 @@ def mask_account_card(number_account_card: str) -> Any:
         return number_account_card[:-16] + mask.get_mask_card_number(number_card)
 
 
-
 print(mask_account_card("Maestro 1596837868705199"))
 
 
-
-
-from datetime import datetime
-
 def get_data(data: str) -> str:
-    """Функция преобразования даты """
+    """Функция преобразования даты"""
     d = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
     return d.strftime("%d.%m.%Y")
 
