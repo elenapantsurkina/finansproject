@@ -1,8 +1,8 @@
+from typing import Any
+
 import mask
 
 from datetime import datetime
-
-from typing import Any
 
 
 def mask_account_card(number_account_card: str) -> Any:
