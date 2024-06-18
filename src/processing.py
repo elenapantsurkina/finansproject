@@ -8,7 +8,7 @@ inform_state = [
 ]
 
 
-def filter_by_state(inform_state: Iterable, state_id="EXECUTED") -> Iterable:
+def filter_by_state(inform_state: Iterable,  state_id="EXECUTED") -> Iterable:
     """Функция, которая принимает на вход список словарей и значение для ключа
     state и выдает новый список с заданным ключом"""
 
@@ -21,11 +21,11 @@ def filter_by_state(inform_state: Iterable, state_id="EXECUTED") -> Iterable:
     return list_state
 
 
-def sort_by_date(inform_state: Iterable) -> Iterable:
+def sort_by_date(inform_state: Iterable, reverse=True) -> Iterable:
     """Функция сортирующая исходные данные по дате"""
 
     sorted_inform_state = sorted(
-        inform_state, key=lambda inform_state: inform_state.get("date"), reverse=True
+        inform_state, key=lambda inform_state: inform_state["date"], reverse=reverse
     )
 
     return sorted_inform_state
