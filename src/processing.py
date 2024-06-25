@@ -1,9 +1,11 @@
+from typing import Any
+
+
 def filter_by_state(
-    inform_state_list: list[dict[str, str | int]], state_id: str = "EXECUTED"
-) -> list[dict[str, str | int]]:
+    inform_state_list: list[dict[str, str | Any]], state_id: str = "EXECUTED"
+) -> list[dict[str, str | Any]]:
     """Функция, которая принимает на вход список словарей и значение для ключа
     state и выдает новый список с заданным ключом"""
-
     list_state = []
 
     for key in inform_state_list:
