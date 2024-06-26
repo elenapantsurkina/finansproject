@@ -1,8 +1,23 @@
-from typing import Generator
+import pytest
+
+from src.generators import filter_by_currency
+
+#
+# def test_transaction_descriptions():
+#     transactions = [{"description": "Перевод организации"}]
+#     generator = transaction_descriptions(transactions)
+#     assert next(generator) == "Перевод организации"
+#
+#
+#
+# @pytest.mark.parametrize("start, stop, expected", [(1, 1, "0000 0000 0000 0001")])
+# def test_card_number_generator(start, stop, expected):
+#     assert next(card_number_generator(start, stop)) == expected
 
 
-transactions = (
-    [
+@pytest.fixture
+def info_transactions():
+    return ([
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -78,37 +93,12 @@ transactions = (
             "from": "Visa Platinum 1246377376343588",
             "to": "Счет 14211924144426031657"
         }
-    ]
-)
+    ])
 
-# def transaction_descriptions(transactions: list) -> Generator:
-#     """Генератор, который принимает список словарей и возвращает описание каждой операции по очереди"""
-#     for transaction in transactions:
-#         yield transaction["description"]
-# descriptions = transaction_descriptions(transactions)
-#
-# for _ in range(5):
-#     print(next(descriptions))
+# def test_filter_by_currency(info_transactions, currency="USD"):
+#     assert filter_by_currency(info_transactions, currency) == "939719570"
 
 
-# def card_number_generator(start: int, stop: int) -> Generator:
-#     """Генератор номеров банковских карт"""
-#     for number in range(start, stop + 1):
-#         card_number = str(number)
-#         while len(card_number) < 16:
-#             card_number = "0" + card_number
-#         formatted_cart_number = f"{card_number[0:4]} {card_number[4:8]} {card_number[8:12]} {card_number[-4:]}"
-#         yield formatted_cart_number
-
-
-def filter_by_currency(transactions: list, currency: str) -> Generator:
-    """Функция, которая принимает список словарей с банковскими операциями и возвращает итератор,
-    который выдает по очереди операции, в которых указана заданная валюта"""
-    for transaction in transactions:
-        if transaction["operationAmount"]["currency"]["code"] == currency:
-            yield transaction["id"]
-
-
-# usd_transactions = filter_by_currency(transactions, "USD")
-# for _ in range(2):
-#     print(next(usd_transactions)["id"])
+def test_filter_by_currency(info_transactions, currency="USD"):
+    gen = filter_by_currency(info_transactions, "USD")
+    assert next(gen) == 939719570
