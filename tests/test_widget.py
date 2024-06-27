@@ -15,5 +15,5 @@ def test_mask_account_card(string, expected_result):
     assert mask_account_card(string) == expected_result
 
 
-def test_get_data(data):
-    assert get_data(data) == "11.07.2018"
+def test_get_data():
+    assert get_data("2018-07-11T02:26:18.671407") == "11.07.2018"

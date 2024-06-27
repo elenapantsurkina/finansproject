@@ -1,6 +1,5 @@
-from typing import Any
-from typing import Callable
 from functools import wraps
+from typing import Any, Callable
 
 
 def log(filename: Any = None) -> Callable:
@@ -33,4 +32,4 @@ def my_function(x, y):
     return x / y
 
 
-my_function(4, 0)
+my_function(2, 0)
