@@ -4,20 +4,24 @@ from functools import wraps
 
 
 def log(filename: Any = None) -> Callable:
+    """декоратор,который логирует вызов функции и ее результат в файл или в консоль"""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
-            log_message = "my_function ok"
             result = func(*args, **kwargs)
             try:
-
                 if filename:
                     with open(filename, "a", encoding="utf-8") as file:
-                        file.write(log_message)
+                        file.write(f"my_function ok")
                 else:
-                    print(log_message)
+                    print(f"my_function ok")
             except Exception as e:
-                print(f"my_function error: {e}. Inputs: {args}, {kwargs}")
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as file:
+                        file.write(f"my_function error: {e}. Inputs: {args}, {kwargs} \n")
+                else:
+                    print(f"my_function error: {e}. Inputs: {args}, {kwargs} \n")
+                    raise
             return result
 
         return wrapper
