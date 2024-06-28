@@ -27,7 +27,7 @@ def log(filename: Any = None) -> Callable:
     return decorator
 
 
-@log()
+@log(filename="mylog.txt")
 def my_function(x, y):
     return x / y
 

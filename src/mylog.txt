@@ -6,3 +6,4 @@ my_function ok
 my_function error: division by zero. Inputs: (2, 0), {} 
 my_function error: division by zero. Inputs: (2, 0), {} 
 my_function error: division by zero. Inputs: (2, 0), {} 
+my_function error: division by zero. Inputs: (2, 0), {} 
