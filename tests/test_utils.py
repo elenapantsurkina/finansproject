@@ -4,7 +4,8 @@ from src.utils import get_transactions_list
 
 def test_get_transactions_list():
     """проверка если передан пустой список"""
-    assert transactions_list([]) == []
+    transaction = get_transactions_list(my_file_path="..\\data\\nodata.json")
+    assert transaction == []
 
 
 def test_get_transactions_list1():

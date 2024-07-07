@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-load_dotenv(".env")
+load_dotenv("..\\.env")
 
 
 def get_transaction_sum_rub(transaction: dict) -> float:
@@ -12,8 +12,8 @@ def get_transaction_sum_rub(transaction: dict) -> float:
     if currency == "RUB":
         return amount
     else:
-        API_KEY = os.getenv("API_KEY")
-        url = "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={from}&amount={amount}"
+        API_KEY = os.environ.get("API_KEY")
+        url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency}&amount={amount}"
         headers = {"apikey": API_KEY}
         response = requests.get(url, headers=headers)
         status_code = response.status_code
@@ -31,7 +31,7 @@ if __name__ == '__main__':
             "state": "EXECUTED",
             "date": "2018-06-30T02:08:58.425572",
             "operationAmount": {
-                "amount": "9824.07",
+                "amount": "67314.70",
                 "currency": {
                     "name": "USD",
                     "code": "USD"
@@ -41,7 +41,5 @@ if __name__ == '__main__':
             "from": "Счет 75106830613657916952",
             "to": "Счет 11776614605963066702"
         }
-    amount = get_transaction_sum_rub(transaction)
-    print(amount)
     result = get_transaction_sum_rub(transaction)
     print(result)
