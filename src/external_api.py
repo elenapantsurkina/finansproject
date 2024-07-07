@@ -6,7 +6,7 @@ load_dotenv("..\\.env")
 
 
 def get_transaction_sum_rub(transaction: dict) -> float:
-    """функция, которая принимает на вход транзакцию и возвращает сумму транзакции """
+    """функция, которая принимает на вход транзакцию и возвращает сумму транзакции"""
     amount = float(transaction["operationAmount"]["amount"])
     currency = transaction["operationAmount"]["currency"]["code"]
     if currency == "RUB":
@@ -25,21 +25,15 @@ def get_transaction_sum_rub(transaction: dict) -> float:
             return result["result"]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     transaction = {
-            "id": 939719570,
-            "state": "EXECUTED",
-            "date": "2018-06-30T02:08:58.425572",
-            "operationAmount": {
-                "amount": "67314.70",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
-            "description": "Перевод организации",
-            "from": "Счет 75106830613657916952",
-            "to": "Счет 11776614605963066702"
-        }
+        "id": 939719570,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {"amount": "67314.70", "currency": {"name": "USD", "code": "USD"}},
+        "description": "Перевод организации",
+        "from": "Счет 75106830613657916952",
+        "to": "Счет 11776614605963066702",
+    }
     result = get_transaction_sum_rub(transaction)
     print(result)
