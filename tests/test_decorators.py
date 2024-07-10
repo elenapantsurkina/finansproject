@@ -8,7 +8,6 @@ from src.decorators import log, my_function
 #         my_function(2, 0)
 
 
-
 def test_log(capsys):
     print(my_function(2, 1))
     captured = capsys.readouterr()
