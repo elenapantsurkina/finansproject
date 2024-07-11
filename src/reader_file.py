@@ -29,6 +29,17 @@ def reader_file_transaction_csv(file: str) -> list[dict]:
     return result
 
 
+# if __name__ == "__main__":
+#     result = reader_file_transaction_csv("..\\data\\transactions.csv")
+#     print(result)
+
+def reader_file_transaction_excel(file: str) -> list[dict]:
+    """Функция считывающая excel файл и возвращающая список словарей"""
+    excel_file = pd.read_excel(file)
+    result_excel = excel_file.to_dict(orient="records")
+    return result_excel
+
+
 if __name__ == "__main__":
-    result = reader_file_transaction_csv("..\\data\\transactions.csv")
+    result = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
     print(result)
