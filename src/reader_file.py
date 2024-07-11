@@ -18,15 +18,16 @@ def reader_file_transaction_csv(file: str) -> list[dict]:
                     "currency": {
                         "name": row[header.index("currency_name")],
                         "code": row[header.index("currency_code")],
-                    }
+                    },
                 },
                 "description": row[header.index("description")],
                 "from": row[header.index("from")],
-                "to": row[header.index("to")]
+                "to": row[header.index("to")],
             }
             result.append(row_dict)
 
     return result
+
 
 # if __name__ == "__main__":
 #     result = reader_file_transaction_csv("..\\data\\transactions.csv")
@@ -40,6 +41,6 @@ def reader_file_transaction_excel(file: str) -> list[dict]:
     return result_excel
 
 
-if __name__ == "__main__":
-    result = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
-    print(result)
+# if __name__ == "__main__":
+#     result = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
+#     print(result)
