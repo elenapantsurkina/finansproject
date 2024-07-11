@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def reader_file_transaction_csv(file: str) -> list[dict]:
-    """Функция считывающая csv файл и возвращающая список словарей"""
+    """Функция считывающая cvs файл и возвращающая список словарей"""
     with open(file, "r", encoding="utf-8") as file:
         reader = csv.reader(file, delimiter=";")
         header = next(reader)
@@ -15,7 +15,7 @@ def reader_file_transaction_csv(file: str) -> list[dict]:
                 "date": row[header.index("date")],
                 "operationAmount": {
                     "amount": row[header.index("amount")],
-                    "currecy": {
+                    "currency": {
                         "name": row[header.index("currency_name")],
                         "code": row[header.index("currency_code")],
                     }
@@ -28,13 +28,13 @@ def reader_file_transaction_csv(file: str) -> list[dict]:
 
     return result
 
-
 # if __name__ == "__main__":
 #     result = reader_file_transaction_csv("..\\data\\transactions.csv")
 #     print(result)
 
+
 def reader_file_transaction_excel(file: str) -> list[dict]:
-    """Функция считывающая excel файл и возвращающая список словарей"""
+    """Функуия считывающая файл в формате excel и возвращающая список словарей"""
     excel_file = pd.read_excel(file)
     result_excel = excel_file.to_dict(orient="records")
     return result_excel
