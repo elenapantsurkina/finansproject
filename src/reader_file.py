@@ -1,4 +1,5 @@
 import csv
+
 import pandas as pd
 
 
@@ -35,10 +36,28 @@ if __name__ == "__main__":
 
 
 def reader_file_transaction_excel(file: str) -> list[dict]:
-    """Функуия считывающая файл в формате excel и возвращающая список словарей"""
-    excel_file = pd.read_excel(file)
-    result_excel = excel_file.to_dict(orient="records")
-    return result_excel
+    """Функция считывающая файл в формате excel и возвращающая список словарей"""
+    df = pd.read_excel(file)  # читаем из экселя в DataFrame
+    result = []
+    rows_count = len(df)  # Получение количества строк в DataFrame
+    for i in range(0, rows_count):
+        row_dict = {
+            "id": df.at[i, "id"],
+            "state": df.at[i, "state"],
+            "date": df.at[i, "date"],
+            "operationAmount": {
+                "amount": df.at[i, "amount"],
+                "currency": {
+                    "name": df.at[i, "currency_name"],
+                    "code": df.at[i, "currency_code"],
+                },
+            },
+            "description": df.at[i, "description"],
+            "from": df.at[i, "from"],
+            "to": df.at[i, "to"],
+        }
+        result.append(row_dict)
+    return result
 
 
 if __name__ == "__main__":
