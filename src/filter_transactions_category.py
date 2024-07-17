@@ -7,6 +7,7 @@ def get_filter_transaction_category(transactions: list[dict]) -> dict:
     а возвращающая словарь, в котором ключи — это названия категорий,
      а значения — это количество операций в каждой категории."""
     category = []
+    counter_category = {}
     for transaction in transactions:
         category.append(transaction.get("description"))
         counter_category = Counter(category)
