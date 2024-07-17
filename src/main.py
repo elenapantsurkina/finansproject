@@ -43,7 +43,7 @@ def main():
                     input_user_sort = input("Отсортировать по возрастанию/по убыванию").upper()
                 else:
                     input_user_sort = input("Отсортировать по возрастанию/по убыванию").upper()
-                        if input_user_sort == "по возрастанию"
+                        if input_user_sort == "по возрастанию":
                             filtered_transactions = sort_by_date(filtered_transactions)
                         else:
                             pass
@@ -61,22 +61,14 @@ def main():
                                                                            bank_op=input_user_filter_description)
                         elif:
                             filtered_transactions = filtered_transactions
-                        print("Распечатываю итоговый список транзакций...")
-                      counter_category = get_filter_transaction_category(filtered_transactions)
-                        print(f"Всего банковских операций в выборке: {counter_category}")
+                            print("Распечатываю итоговый список транзакций...")
+                            counter_category = get_filter_transaction_category(filtered_transactions)
+                            print(f"Всего банковских операций в выборке: {counter_category}")
+                            print(filtered_transactions)
 
                         else:
-                        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
-
-
-
-
-
-
-
-
-
-
+                            print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+                return
 
 
 
