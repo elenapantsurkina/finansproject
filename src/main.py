@@ -4,17 +4,17 @@ from src.reader_file import reader_file_transaction_csv, reader_file_transaction
 from src.processing import filter_by_state, sort_by_date
 from src.filter_transactions import get_filter_transaction
 from src.filter_transactions_category import get_filter_transaction_category
-from src.widget import mask_account_card
+from src.external_api import get_transaction_sum_rub
+from src.widget import mask_account_card, get_data
 
 
 def main():
     while True:
-        print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n"
-              "Выберите необходимый пункт меню:\n"
-              "1. Получить информацию о транзакциях из JSON-файла\n"
-              "2. Получить информацию о транзакциях из CSV-файла\n"
-              "3. Получить информацию о транзакциях из XLSX-файла")
-        user_input = input()
+        user_input = input("Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n"
+                           "Выберите необходимый пункт меню:\n"
+                           "1. Получить информацию о транзакциях из JSON-файла\n"
+                           "2. Получить информацию о транзакциях из CSV-файла\n"
+                           "3. Получить информацию о транзакциях из XLSX-файла\n")
         if user_input not in ["1", "2", "3"]:
             print("Вами не выбран доступный формат файла")
             break
@@ -30,45 +30,66 @@ def main():
             print("Для обработки выбран XLCX-файл")
             # continue
             transactions = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
+
         input_user_state = input("Введите статус, по которому необходимо выполнить фильтрацию.\n "
-                  "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING").upper()
-        if not in ["EXECUTED", "CANCELED", "PENDING"]:
+                                 "Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n").upper()
+        if input_user_state not in ["EXECUTED", "CANCELED", "PENDING"]:
             print(f"Статус операции {input_user_state} не доступен.")
             break
         else:
             print(f"Операции отфильтрованы по статусу{input_user_state}")
             filtered_transactions = filter_by_state(transactions, input_user_state)
-            user_input_data = input("Отсортировать операции по дате? Да/Нет").upper()
-                if user_input == "Да":
-                    input_user_sort = input("Отсортировать по возрастанию/по убыванию").upper()
-                else:
-                    input_user_sort = input("Отсортировать по возрастанию/по убыванию").upper()
-                        if input_user_sort == "по возрастанию":
-                            filtered_transactions = sort_by_date(filtered_transactions)
-                        else:
-                            pass
-                            input_user_rub = input("Выводить только рублевые тразакции? Да/Нет").upper()
 
-                            if input_user_rub == "Да":
-                            filtered_transactions = filtered_transactions["operationAmount"]["amount"]["currency"]
-                        else:
-                            pass
-                        input_user_filter_description = input(
-                            "Отфильтровать список транзакций по определенному слову в описании? Да/Нет").upper()
-                        if input_user_filter_description == "Да":
-                            input_user_filter_description = input("Введите категорию фильтрации: ").upper()
-                            filtered_transactions = get_filter_transaction(filtered_transactions,
+
+        user_input_data = input("Отсортировать операции по дате? Да/Нет\n").upper()
+        if user_input_data == "ДА":
+            input_user_sort = input("Отсортировать по возрастанию/по убыванию\n").upper()
+            if input_user_sort == "ПО ВОЗРАСТАНИЮ":
+                filtered_transactions = sort_by_date(filtered_transactions)
+            else:
+                filtered_transactions = sort_by_date(filtered_transactions, False)
+
+        input_user_rub = input("Выводить только рублевые тразакции? Да/Нет\n").upper()
+        if input_user_rub == "ДА":
+            filtered_transactions = [t for t in filtered_transactions if t["operationAmount"]["currency"]["code"] == "RUB"]
+
+        input_user_filter_description = input(
+                            "Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n").upper()
+        if input_user_filter_description == "ДА":
+            input_user_filter_description = input("Введите категорию фильтрации: ").capitalize()
+            filtered_transactions = get_filter_transaction(filtered_transactions,
                                                                            bank_op=input_user_filter_description)
-                        elif:
-                            filtered_transactions = filtered_transactions
-                            print("Распечатываю итоговый список транзакций...")
-                            counter_category = get_filter_transaction_category(filtered_transactions)
-                            print(f"Всего банковских операций в выборке: {counter_category}")
-                            print(filtered_transactions)
+            print("Распечатываю итоговый список транзакций...")
+            if filtered_transactions:
+                counter_category = get_filter_transaction_category(filtered_transactions)
+                print(f"Всего банковских операций в выборке: {input_user_filter_description}: {counter_category[input_user_filter_description]}")
+                #print(filtered_transactions)
+                for trans in filtered_transactions:
+                    print(f"Дата: {get_data(trans['date'])}, {trans['description']}")
+                    if trans.get('from'):
+                        print(f"Счет: {mask_account_card(trans['from'])} -> Счет: {mask_account_card(trans['to'])}")
+                    else:
+                        print(f"Счет: {mask_account_card(trans['to'])}")
+                    print(f"Сумма: {trans['operationAmount']['amount']}")
+                break
 
-                        else:
-                            print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
-                return
+            else:
+                print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+
+        else:
+            print("Распечатываю итоговый список транзакций...")
+            print(f"Всего банковских операций в выборке: {len(filtered_transactions)}")
+            for trans in filtered_transactions:
+                print(f"Дата: {get_data(trans['date'])}, {trans['description']}")
+                if trans.get('from'):
+                    print(f"Счет: {mask_account_card(trans['from'])} -> Счет: {mask_account_card(trans['to'])}")
+                else:
+                    print(f"Счет: {mask_account_card(trans['to'])}")
+                print(f"Сумма: {trans['operationAmount']['amount']}")
+            #print(filtered_transactions)
+            break
+
+    return
 
 
 
