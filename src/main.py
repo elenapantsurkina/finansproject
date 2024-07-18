@@ -70,7 +70,8 @@ def main():
             if filtered_transactions:
                 counter_category = get_filter_transaction_category(filtered_transactions)
                 print(
-                    f"Всего банковских операций в выборке: {input_user_filter_description}: {counter_category[input_user_filter_description]}"
+                    f"Всего банковских операций в выборке:\
+                    {input_user_filter_description}: {counter_category[input_user_filter_description]}"
                 )
                 # print(filtered_transactions)
                 for trans in filtered_transactions:
