@@ -30,9 +30,9 @@ def reader_file_transaction_csv(file: str) -> list[dict]:
     return result
 
 
-if __name__ == "__main__":
-    result = reader_file_transaction_csv("..\\data\\transactions.csv")
-    print(result)
+# if __name__ == "__main__":
+#     result = reader_file_transaction_csv("..\\data\\transactions.csv")
+#     print(result)
 
 
 def reader_file_transaction_excel(file: str) -> list[dict]:
@@ -53,13 +53,13 @@ def reader_file_transaction_excel(file: str) -> list[dict]:
                 },
             },
             "description": df.at[i, "description"],
-            "from": df.at[i, "from"],
-            "to": df.at[i, "to"],
+            "from": str(df.at[i, "from"]),
+            "to": str(df.at[i, "to"]),
         }
         result.append(row_dict)
     return result
 
 
-if __name__ == "__main__":
-    result = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
-    print(result)
+# if __name__ == "__main__":
+#     result = reader_file_transaction_excel("..\\data\\transactions_excel.xlsx")
+#     print(result)
