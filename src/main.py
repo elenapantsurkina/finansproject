@@ -1,11 +1,9 @@
-
-from src.utils import get_transactions_list
-from src.reader_file import reader_file_transaction_csv, reader_file_transaction_excel
-from src.processing import filter_by_state, sort_by_date
 from src.filter_transactions import get_filter_transaction
 from src.filter_transactions_category import get_filter_transaction_category
-
-from src.widget import mask_account_card, get_data
+from src.processing import filter_by_state, sort_by_date
+from src.reader_file import reader_file_transaction_csv, reader_file_transaction_excel
+from src.utils import get_transactions_list
+from src.widget import get_data, mask_account_card
 
 
 def main():
