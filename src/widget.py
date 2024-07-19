@@ -14,13 +14,15 @@ def mask_account_card(number_account_card: str) -> Any:
         return number_account_card[:-16] + get_mask_card_number(number_card)
 
 
-print(mask_account_card("Maestro 1596837868705199"))
+# print(mask_account_card("Maestro 1596837868705199"))
 
 
 def get_data(data: str) -> str:
     """Функция преобразования даты"""
-    d = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
+    data = data[:10]
+    # d = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
+    d = datetime.strptime(data, "%Y-%m-%d")
     return d.strftime("%d.%m.%Y")
 
 
-print(get_data("2018-07-11T02:26:18.671407"))
+# print(get_data("2018-07-11T02:26:18.671407"))
