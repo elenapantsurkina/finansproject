@@ -1,4 +1,5 @@
 import json
+import re
 
 
 def get_filter_transaction(transactions: list[dict], bank_op: str) -> list[dict]:
@@ -6,9 +7,12 @@ def get_filter_transaction(transactions: list[dict], bank_op: str) -> list[dict]
     и возвращающая список словарей, у которых в описании есть данная строка"""
     list_bank_op = []
     for transaction in transactions:
-        if transaction.get("description") == bank_op:
+        if "description" in transaction and re.search(bank_op, transaction["description"], flags=re.IGNORECASE):
             list_bank_op.append(transaction)
     return list_bank_op
+    #     if transaction.get("description") == bank_op:
+    #         list_bank_op.append(transaction)
+    # return list_bank_op
 
 
 if __name__ == "__main__":
